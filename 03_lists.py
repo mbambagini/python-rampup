@@ -45,12 +45,6 @@ numbers = ['first', 'second', 'third', 'forth']
 for number in numbers:
     print(number)
 
-# appent
-numbers = []
-for i in range(1,10):
-    numbers.append(i)
-print(numbers)
-
 # operations on lists
 even_numbers = list(range(0,10,2))
 print(even_numbers)

@@ -4,7 +4,7 @@ print(message)
 message = 'Hello world!'
 print(message)
 
-# string processing
+# simple string manipulation
 print("Title format:\t" + message.title())
 print("All lower-case:\t" + message.lower())
 print("All upper-case:\t" + message.upper())
