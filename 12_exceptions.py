@@ -1,4 +1,5 @@
 # catch division-by-0 exception
+print("-> ZeroDivisionError exception")
 a = 10
 b = 0
 try:
@@ -9,6 +10,7 @@ else:
     print("The result is " + str(div))
 
 # don't do anything when the exception is caught
+print("-> ZeroDivisionError exception")
 try:
     div = a/b
 except ZeroDivisionError:
@@ -17,6 +19,7 @@ else:
     print("The result is " + str(div))
 
 # catch not-existing-file exception
+print("-> NotExistingFile exception")
 try:
     with open("NotExistingFile.txt") as fobj:
         cnt = fobj.read()

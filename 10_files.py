@@ -11,11 +11,13 @@ with open(filename, 'a') as fobj:
         fobj.write("More greetings!\n")
 
 # read the whole file content
+print("-> Read whole file content")
 with open(filename) as fobj:
     full_content = fobj.read()
     print(full_content)
 
 # read lines from a file
+print("-> Read line by line")
 with open(filename) as fobj:
     for line in fobj:
         print(line.rstrip())
