@@ -35,6 +35,7 @@ print("")
 
 # call function with one input and no output
 # the list is passed by reference
+# classes as passed by reference
 print("-> Function with list passed by reference")
 animals = ['duck', 'dog', 'cat']
 f_with_lists(animals)
