@@ -28,6 +28,7 @@ class Ship(object):
         self.move_factor = 0.0
 
     def update(self):
+       # shift the ship along the X-axis
        self.center += self.move_factor
        if self.center > self.right_border:
           self.center = self.right_border

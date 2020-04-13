@@ -1,7 +1,7 @@
 from pygame.sprite import Group
 
 class GameStatus(object):
-    """Current status of the game: active, score, best score,
+    """Current status of the game: game activity, score, best score,
        level and remaining lives"""
 
     def __init__(self, settings):
@@ -19,14 +19,17 @@ class GameStatus(object):
         self.isPaused = False
 
     def updateScore(self, aliensDestroyed):
+        """More aliens destroyed"""
         self.score += aliensDestroyed * self.score_per_alien
 
     def levelCompleted(self):
+        """The level has been completed correctly"""
         self.score += self.score_per_level
         self.latest_score = self.score
         self.level += 1
 
     def restartLevelIfPossible(self):
+        """Ship destroyed or aliens reached the bottom of the screen"""
         self.lives -= 1
         if self.lives == 0:
             if self.score > self.best_score:

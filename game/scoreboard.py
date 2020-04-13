@@ -3,7 +3,7 @@ from pygame.sprite import Group
 from life import Life
 
 class Scoreboard(object):
-    """Manage display of score, level and remaining lives"""
+    """Manage the display of score, level and lives"""
 
     def __init__(self, screen, settings, status):
         self.screen = screen
@@ -11,6 +11,7 @@ class Scoreboard(object):
         self.text_color = settings.score_text_color
         self.color = settings.score_background
         self.font = pygame.font.SysFont(None, settings.score_font_size)
+        self.lives = Group()
         self.update(status)
 
     def update(self, status):
@@ -33,12 +34,14 @@ class Scoreboard(object):
         self.level_rect.right = self.screen_rect.right - 10
         self.level_rect.top = self.score_rect.bottom + 5
         # lives
-        self.lives = Group()
-        for i in range(status.lives):
-             life = Life(self.screen, i)
-             self.lives.add(life)
+        if len(self.lives) != status.lives:
+            self.lives = Group()
+            for i in range(status.lives):
+                 life = Life(self.screen, i)
+                 self.lives.add(life)
 
     def draw(self):
+        # draw score board
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.best_score_image, self.best_score_rect)
         self.screen.blit(self.level_image, self.level_rect)

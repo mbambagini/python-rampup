@@ -30,6 +30,7 @@ def prepare_game(settings, screen, status, bullets, aliens, ship):
 
 
 def restart_game(settings, screen, status, bullets, aliens, ship):
+    """Restart the game on the screen and wait one second before going on"""
     prepare_game(settings, screen, status, bullets, aliens, ship)
     sleep(1)
 
@@ -50,6 +51,7 @@ def check_events(cfg, screen, ship, bullets, playBtn, status):
                     b = Bullet(screen, cfg, ship.getCannonX(), ship.getCannonY())
                     bullets.add(b)
                 elif event.key == pygame.K_p:
+                    # pause game
                     status.isPaused = True
             elif event.type == pygame.KEYUP:
                 # stop the ship
@@ -57,6 +59,7 @@ def check_events(cfg, screen, ship, bullets, playBtn, status):
                     ship.stop()
         elif status.isRunning and status.isPaused:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                # resume game
                 status.isPaused = False
         else:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -80,7 +83,7 @@ def update_objects_and_game(settings, screen, ship, aliens, bullets, scoreboard,
     ship.update()
     # detect hit aliens and update score
     # to easily detect the number of destroyed aliens, pass it as first argument
-    # because a bullet can it more than one alien. groupcollide uses the first
+    # because a bullet can hit more than one alien. groupcollide uses the first
     # argument as key of the returned dictionary
     collisions = pygame.sprite.groupcollide(aliens, bullets, True, True)
     if collisions:
@@ -127,7 +130,7 @@ def draw_objects(ship, aliens, bullets, scoreboard, playBtn, pauseBtn, status):
 
 
 def create_screen(settings):
-    """Create and configura main screen object"""
+    """Create and configure the main screen object"""
     screen = pygame.display.set_mode(settings.getWindowSize())
     pygame.display.set_caption(settings.getWindowTitle())
     return screen

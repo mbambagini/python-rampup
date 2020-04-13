@@ -2,7 +2,7 @@ import pygame
 from pygame.sprite import Sprite
 
 class Alien(Sprite):
-    """An instance of this class is an alien in the screen"""
+    """An instance of this class is an alien on the screen"""
 
     def __init__(self, screen, settings, level, init_x, init_y, offset_x):
         super(Alien, self).__init__()
@@ -20,6 +20,7 @@ class Alien(Sprite):
         self.y_speed = settings.alien_initial_speed_y * level
 
     def update(self):
+        """Update the alien position"""
         self.center_x += self.x_speed
         if self.center_x > self.max_x:
             self.center_x = self.max_x
@@ -33,10 +34,12 @@ class Alien(Sprite):
         self.rect.y = self.y
 
     def reachBottom(self):
+         """Return true if the alien reached the bottom of the screen"""
          if self.rect.bottom >= self.screen.get_rect().bottom:
              return True
          return False
 
     def draw(self):
+        """Draw the alien"""
         self.screen.blit(self.image, self.rect)
 

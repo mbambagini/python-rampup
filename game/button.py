@@ -3,7 +3,7 @@ import pygame.font
 class Button(object):
     """Generic button object"""
 
-    def __init__(self, screen, width, height, background, text_color, size, msg):
+    def __init__(self, screen, width, height, background, txt_color, size, msg):
         self.screen = screen
         self.screen_rect = screen.get_rect()
         self.width = width
@@ -14,7 +14,7 @@ class Button(object):
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
         # create message
-        self.msg_image = self.font.render(msg, True, text_color, self.color)
+        self.msg_image = self.font.render(msg, True, txt_color, self.color)
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
@@ -22,7 +22,10 @@ class Button(object):
         self.screen.fill(self.color, self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)
 
+
 class PlayButton(Button):
+    """Customize Button to be a play button"""
+
     def __init__(self, screen, settings):
         super(PlayButton, self).__init__(screen, \
                                          settings.play_button_width, \
@@ -32,7 +35,10 @@ class PlayButton(Button):
                                          settings.button_font_size, \
                                          "Play")
 
+
 class PauseButton(Button):
+    """Customize Button to be a resume button"""
+
     def __init__(self, screen, settings):
         super(PauseButton, self).__init__(screen, \
                                           settings.pause_button_width, \
@@ -41,3 +47,4 @@ class PauseButton(Button):
                                           settings.button_text_color, \
                                           settings.button_font_size, \
                                           "Game paused")
+
