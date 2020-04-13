@@ -16,6 +16,7 @@ class GameStatus(object):
         self.level = 1
         self.lives = 3
         self.isRunning = False
+        self.isPaused = False
 
     def updateScore(self, aliensDestroyed):
         self.score += aliensDestroyed * self.score_per_alien

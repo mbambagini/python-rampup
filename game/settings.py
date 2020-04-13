@@ -13,8 +13,11 @@ class Settings(object):
         self.score_background = (230, 230, 230)
         self.score_font_size = 30
 
-        self.button_width = 200
-        self.button_height = 50
+        self.play_button_width = 200
+        self.play_button_height = 50
+        self.pause_button_width = 300
+        self.pause_button_height = 70
+
         self.button_background = (0, 0, 0)
         self.button_text_color = (255, 255, 255)
         self.button_font_size = 48

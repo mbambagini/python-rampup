@@ -39,7 +39,7 @@ def check_events(cfg, screen, ship, bullets, playBtn, status):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        if status.isRunning:
+        if status.isRunning and not status.isPaused:
             if event.type == pygame.KEYDOWN:
                 # move ship or shoot a bullet
                 if event.key == pygame.K_RIGHT:
@@ -49,10 +49,15 @@ def check_events(cfg, screen, ship, bullets, playBtn, status):
                 elif event.key == pygame.K_SPACE:
                     b = Bullet(screen, cfg, ship.getCannonX(), ship.getCannonY())
                     bullets.add(b)
+                elif event.key == pygame.K_p:
+                    status.isPaused = True
             elif event.type == pygame.KEYUP:
                 # stop the ship
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                     ship.stop()
+        elif status.isRunning and status.isPaused:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                status.isPaused = False
         else:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # start game
@@ -61,20 +66,23 @@ def check_events(cfg, screen, ship, bullets, playBtn, status):
                     status.isRunning = True
 
 
-def update_objects_and_game(settings, screen, ship, aliens, bullets, scoreboard, playBtn, status):
+def update_objects_and_game(settings, screen, ship, aliens, bullets, scoreboard, status):
     """Execute a step in the game"""
 
     # update scoreboard
     scoreboard.update(status)
 
-    if not status.isRunning:
+    if not status.isRunning or status.isPaused:
         # if the game is stopped, nothing else to update
         return
 
     # update ship
     ship.update()
     # detect hit aliens and update score
-    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    # to easily detect the number of destroyed aliens, pass it as first argument
+    # because a bullet can it more than one alien. groupcollide uses the first
+    # argument as key of the returned dictionary
+    collisions = pygame.sprite.groupcollide(aliens, bullets, True, True)
     if collisions:
         status.updateScore(len(collisions))
     # all aliens destroyed
@@ -103,7 +111,7 @@ def update_objects_and_game(settings, screen, ship, aliens, bullets, scoreboard,
         restart_game(settings, screen, status, bullets, aliens, ship)
 
 
-def draw_objects(ship, aliens, bullets, scoreboard, playBtn, status):
+def draw_objects(ship, aliens, bullets, scoreboard, playBtn, pauseBtn, status):
     """Draw all active elements on the screen for the current frame"""
     ship.draw()
     for alien in aliens:
@@ -111,10 +119,10 @@ def draw_objects(ship, aliens, bullets, scoreboard, playBtn, status):
     for bullet in bullets:
         bullet.draw()
     scoreboard.draw()
-    if status.isRunning:
-        pygame.mouse.set_visible(False)
-    else:
-        pygame.mouse.set_visible(True)
+    pygame.mouse.set_visible(not status.isRunning)
+    if status.isRunning and status.isPaused:
+        pauseBtn.draw()
+    elif not status.isRunning:
         playBtn.draw()
 
 

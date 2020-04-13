@@ -1,5 +1,3 @@
-# todo: pause
-
 import sys
 import pygame
 from pygame.sprite import Group
@@ -8,7 +6,7 @@ from ship import Ship
 from status import GameStatus
 from alien import Alien
 from bullet import Bullet
-from button import Button
+from button import PlayButton, PauseButton
 from scoreboard import Scoreboard
 from utils import prepare_game
 from utils import create_screen
@@ -25,7 +23,8 @@ def main_game_loop():
     scoreboard = Scoreboard(screen, cfg, status)
     aliens = Group()
     bullets = Group()
-    playBtn = Button(screen, cfg, "Play")
+    playBtn = PlayButton(screen, cfg)
+    pauseBtn = PauseButton(screen, cfg)
     # setup game to start
     prepare_game(cfg, screen, status, bullets, aliens, ship)
     # main loop
@@ -34,9 +33,9 @@ def main_game_loop():
        check_events(cfg, screen, ship, bullets, playBtn, status)
        # update object states
        screen.fill(cfg.getBackgroundColor())
-       update_objects_and_game(cfg, screen, ship, aliens, bullets, scoreboard, playBtn, status)
+       update_objects_and_game(cfg, screen, ship, aliens, bullets, scoreboard, status)
        # draw objects
-       draw_objects(ship, aliens, bullets, scoreboard, playBtn, status)
+       draw_objects(ship, aliens, bullets, scoreboard, playBtn, pauseBtn, status)
        pygame.display.flip()
 
 # start game

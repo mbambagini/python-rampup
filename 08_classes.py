@@ -12,7 +12,7 @@ class Polygon(object):
 class Rectangle(Polygon):
     """Derived class"""
     def __init__(self, name, side1 = 10, side2 = 10):
-        super(Rectangle,self).__init__(name)
+        super(Rectangle, self).__init__(name)
         self.side1 = side1
         self.side2 = side2
     def perimeter(self):
